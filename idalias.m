@@ -7,7 +7,7 @@
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
  
-static IMP sOriginalImp = NULL;
+static IMP NSSavePanel_URLs = NULL;
  
 @interface IDAlias:Object
 {
@@ -18,11 +18,9 @@ static IMP sOriginalImp = NULL;
  
 +(void)load
 {
-    // We replace the method -[CalculatorController showAbout:] with
-    // the method -[ACCalculatorOverrides patchedShowAbout:]
     Class originalClass = NSClassFromString(@"NSSavePanel");
     Method originalMeth = class_getInstanceMethod(originalClass, @selector(URLs));
-    sOriginalImp = method_getImplementation(originalMeth);
+    NSSavePanel_URLs = method_getImplementation(originalMeth);
      
     Method replacementMeth = class_getInstanceMethod(NSClassFromString(@"IDAlias"), @selector(URLs));
     method_exchangeImplementations(originalMeth, replacementMeth);
@@ -31,17 +29,23 @@ static IMP sOriginalImp = NULL;
 -(NSArray*)URLs
 {
   NSArray *urlArray;
+  int count;
 
-    // We first call the original method to display the original About Box
-    urlArray = sOriginalImp(self, @selector(URLs), self);
+    // We first call the original method
+    urlArray = NSSavePanel_URLs(self, @selector(URLs), self);
      
-    // Run our custom code which simply display an alert
-#if 0
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Code has been injected!" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"The code has been injected using DYLD_INSERT_LIBRARIES into Calculator.app"];
-    [alert runModal];
-#endif
+    // Run our custom code
+    if ((count = [urlArray count])) {
+      int i;
 
-    fprintf(stderr, "[NSSavePanel URLs] returned %d\n", (int)[urlArray count]);
+      for (i=0; i<count; i++) {
+	fprintf(stderr, "URL:  %s\n",
+		[[[urlArray objectAtIndex:i] path] UTF8String]);
+	fprintf(stderr, " std: %s\n",
+		[[[[urlArray objectAtIndex:i] URLByResolvingSymlinksInPath] path] UTF8String]);
+      }
+
+    }
     return urlArray;
 }
  
