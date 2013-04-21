@@ -6,12 +6,10 @@
  
 static IMP NSSavePanel_URLs = NULL;
  
-#if 0
-@interface IDAlias:Object
+@interface IDAlias:NSObject
 {
 }
 @end
-#endif
 
 @implementation IDAlias
  
