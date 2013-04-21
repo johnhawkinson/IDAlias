@@ -2,12 +2,18 @@
 #import "IDAlias.h"
  
 #include <stdio.h>
+#include <objc/Object.h>
 #include <objc/runtime.h>
 #include <Foundation/Foundation.h>
 #include <AppKit/AppKit.h>
  
 static IMP sOriginalImp = NULL;
  
+@interface IDAlias:Object
+{
+}
+@end
+
 @implementation IDAlias
  
 +(void)load
