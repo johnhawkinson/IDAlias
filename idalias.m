@@ -40,8 +40,10 @@ static IMP NSSavePanel_URLs = NULL;
 
       for (i=0; i<count; i++) {
 	NSURL *url = [urlArray objectAtIndex:i];
+#ifdef DEBUG
 	fprintf(stderr, "URL:  %s\n",
 		[[url path] UTF8String]);
+#endif
 
 	
 	NSData *alias = [NSURL bookmarkDataWithContentsOfURL:url error:&error];
@@ -60,9 +62,9 @@ static IMP NSSavePanel_URLs = NULL;
 	}
 
 	[urlArray replaceObjectAtIndex:i withObject:realURL];
-	if (0) { // debugging
+#ifdef DEBUG
 	  NSLog(@"IDAlias replaced path with realPath:%@", [realURL path]);
-	}
+#endif
       }
 
     }
