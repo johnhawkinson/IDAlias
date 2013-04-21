@@ -1,6 +1,3 @@
-/* #xxx #import "ACCalculatorOverrides.h" */
-#import "IDAlias.h"
- 
 #include <stdio.h>
 #include <objc/Object.h>
 #include <objc/runtime.h>
@@ -57,11 +54,11 @@ static IMP NSSavePanel_URLs = NULL;
 				       bookmarkDataIsStale:&isStale
 						     error:&error];
 	if (isStale || realURL == NULL) {
-	  NSLog(@"Failed realURL: %@", error);
+	  NSLog(@"IDAlias failed alias resolution: %@", error);
 	}
 
 	[urlArray replaceObjectAtIndex:i withObject:realURL];
-	NSLog(@"realPath:%@", [realURL path]);
+	NSLog(@"IDAlias replaced path with realPath:%@", [realURL path]);
       }
 
     }
