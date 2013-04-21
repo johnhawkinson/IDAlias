@@ -28,8 +28,9 @@ static IMP NSSavePanel_URLs = NULL;
  
 -(NSArray*)URLs
 {
-  NSArray *urlArray;
   int count;
+  NSError *error = nil;
+  NSArray *urlArray;
 
     // We first call the original method
     urlArray = NSSavePanel_URLs(self, @selector(URLs), self);
@@ -39,10 +40,27 @@ static IMP NSSavePanel_URLs = NULL;
       int i;
 
       for (i=0; i<count; i++) {
+	NSURL *url = [urlArray objectAtIndex:i];
 	fprintf(stderr, "URL:  %s\n",
-		[[[urlArray objectAtIndex:i] path] UTF8String]);
-	fprintf(stderr, " std: %s\n",
-		[[[[urlArray objectAtIndex:i] URLByResolvingSymlinksInPath] path] UTF8String]);
+		[[url path] UTF8String]);
+
+	
+	NSData *alias = [NSURL bookmarkDataWithContentsOfURL:url error:&error];
+	if (alias == NULL) {
+	  NSLog(@"Failed aliasURL: %@", error);
+	}
+
+	BOOL isStale;
+	NSURL *realURL = [NSURL URLByResolvingBookmarkData:alias options:0
+					     relativeToURL:nil
+				       bookmarkDataIsStale:&isStale
+						     error:&error];
+	if (isStale || realURL == NULL) {
+	  NSLog(@"Failed realURL: %@", error);
+	}
+
+	NSLog(@"realPath:%@", [realURL path]);
+
       }
 
     }
