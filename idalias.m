@@ -58,7 +58,9 @@ static IMP NSSavePanel_URLs = NULL;
 	}
 
 	[urlArray replaceObjectAtIndex:i withObject:realURL];
-	NSLog(@"IDAlias replaced path with realPath:%@", [realURL path]);
+	if (0) { // debugging
+	  NSLog(@"IDAlias replaced path with realPath:%@", [realURL path]);
+	}
       }
 
     }
