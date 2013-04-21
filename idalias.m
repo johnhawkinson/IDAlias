@@ -30,7 +30,7 @@ static IMP NSSavePanel_URLs = NULL;
 {
   int count;
   NSError *error = nil;
-  NSArray *urlArray;
+  NSMutableArray *urlArray;
 
     // We first call the original method
     urlArray = NSSavePanel_URLs(self, @selector(URLs), self);
@@ -47,7 +47,8 @@ static IMP NSSavePanel_URLs = NULL;
 	
 	NSData *alias = [NSURL bookmarkDataWithContentsOfURL:url error:&error];
 	if (alias == NULL) {
-	  NSLog(@"Failed aliasURL: %@", error);
+	  // Not an alias! A-OK!
+	  continue;
 	}
 
 	BOOL isStale;
@@ -59,8 +60,8 @@ static IMP NSSavePanel_URLs = NULL;
 	  NSLog(@"Failed realURL: %@", error);
 	}
 
+	[urlArray replaceObjectAtIndex:i withObject:realURL];
 	NSLog(@"realPath:%@", [realURL path]);
-
       }
 
     }
