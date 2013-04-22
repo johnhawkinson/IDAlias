@@ -1,6 +1,7 @@
 all: IDAlias.dylib # CalculatorOverrides.dylib # IDAlias64.dylib 
 
-VERSION=0.0.0		# hash: 01770378595d447b64764d88fb8add27483ca815
+# VERSION=0.0.0		# hash: 01770378595d447b64764d88fb8add27483ca815
+VERSION=0.0.1
 
 clean:
 	rm -f IDAlias.dylib IDAlias64.dylib CalculatorOverride.dylib
