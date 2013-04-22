@@ -7,7 +7,7 @@ clean:
 	rm -f IDAlias.dylib IDAlias64.dylib CalculatorOverride.dylib
 
 IDAlias.dylib: IDAlias.m
-	gcc -g \
+	gcc -g -Wall \
 	  -current_version ${VERSION} \
 	  -arch i386 -arch x86_64 \
 	  -framework AppKit -framework Foundation \
