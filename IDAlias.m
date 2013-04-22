@@ -24,6 +24,8 @@ static IMP NSSavePanel_URLs = NULL;
  
 +(void)load
 {
+    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+
     Class originalClass = NSClassFromString(@"NSSavePanel");
     Method originalMeth = class_getInstanceMethod(originalClass,
 						  @selector(URLs));
@@ -33,6 +35,8 @@ static IMP NSSavePanel_URLs = NULL;
 			         NSClassFromString(@"IDAlias"),
 				 @selector(URLs));
     method_exchangeImplementations(originalMeth, replacementMeth);
+
+    [pool drain];
 }
  
 -(NSArray*)URLs
