@@ -25,10 +25,13 @@ static IMP NSSavePanel_URLs = NULL;
 +(void)load
 {
     Class originalClass = NSClassFromString(@"NSSavePanel");
-    Method originalMeth = class_getInstanceMethod(originalClass, @selector(URLs));
+    Method originalMeth = class_getInstanceMethod(originalClass,
+						  @selector(URLs));
     NSSavePanel_URLs = method_getImplementation(originalMeth);
      
-    Method replacementMeth = class_getInstanceMethod(NSClassFromString(@"IDAlias"), @selector(URLs));
+    Method replacementMeth = class_getInstanceMethod(
+			         NSClassFromString(@"IDAlias"),
+				 @selector(URLs));
     method_exchangeImplementations(originalMeth, replacementMeth);
 }
  
