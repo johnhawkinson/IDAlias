@@ -1,3 +1,10 @@
+// from http://blog.timac.org/?p=761
+// Simple code injection using DYLD_INSERT_LIBRARIES
+// Posted: December 18th, 2012
+// Author: Timac
+// Filed under: code injection, Debugging, DYLD_INSERT_LIBRARIES, MacOSX, Programming
+// | No Comments
+
 /* #import "ACCalculatorOverrides.h" */
  
 #include <stdio.h>

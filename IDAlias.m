@@ -1,3 +1,12 @@
+// IDAlias.m
+// Force alias resolution in NSSavePanels under 10.8 for
+// recalcitrant applications. Such as InDesign.
+// 
+// John Hawkinson <jhawk@mit.edu>
+// 21 April 2013
+// 
+// Derived from an example by Alexandre Colucci (timac.org)
+
 #include <stdio.h>
 #include <objc/Object.h>
 #include <objc/runtime.h>
