@@ -1,4 +1,7 @@
-all: IDAlias.dylib IDAlias64.dylib CalculatorOverrides.dylib
+all: IDAlias.dylib CalculatorOverrides.dylib # IDAlias64.dylib 
+
+clean:
+	rm -f IDAlias.dylib IDAlias64.dylib CalculatorOverride.dylib
 
 IDAlias.dylib: IDAlias.m
 	gcc -g -arch i386 -arch x86_64 -framework AppKit -framework Foundation -o IDAlias.dylib -lobjc -dynamiclib IDAlias.m
