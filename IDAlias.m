@@ -1,6 +1,7 @@
 // IDAlias.m
 // Force alias resolution in NSSavePanels under 10.8 for
-// recalcitrant applications. Such as InDesign.
+// recalcitrant applications. Such as InDesign. Only load
+// ourselves in apps on our list (InDesign and InCopy).
 // 
 // John Hawkinson <jhawk@mit.edu>
 // 21 April 2013
@@ -25,6 +26,46 @@ static IMP NSSavePanel_URLs = NULL;
 +(void)load
 {
     NSAutoreleasePool *pool = [NSAutoreleasePool new];
+
+    NSArray *appsToUse = [NSArray arrayWithObjects:
+				  @"Adobe InDesign",
+				  @"Adobe InCopy",
+				  nil];
+    
+    /* Of the methods discussed in 
+     * Technical Q&A QA1544
+     * Obtaining the localized application name in Cocoa
+     * http://developer.apple.com/library/mac/#qa/qa1544/_index.html
+     *
+     * only methods (3) and (5) return useful strings for InDesign at this
+     * stage; the others return null:
+     *
+     * [[NSProcessInfo processInfo] processName]
+     * returns <Adobe InDesign CS5>
+     *
+     * -[NSBundlebundlePath]
+     * returns <Adobe InDesign CS5.app>
+     */
+
+    NSString *procName = [[NSProcessInfo processInfo] processName];
+
+    NSEnumerator *i = [appsToUse objectEnumerator];
+    id id;
+    BOOL found = NO;
+    while ((id = [i nextObject])) {
+	if ([procName rangeOfString:id].location == 0)
+	    found = YES;
+    }
+
+    if (!found) {
+#if DEBUG
+	NSLog(@"IDAlias in proc <%@> not ID/IC. Punting.", procName);
+#endif
+	return;
+    }
+
+    NSLog(@"IDAlias interposing -[NSSavePanel URLs] in process <%@>.",
+	  procName);
 
     Class originalClass = NSClassFromString(@"NSSavePanel");
     Method originalMeth = class_getInstanceMethod(originalClass,

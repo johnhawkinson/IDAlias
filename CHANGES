@@ -1,0 +1,9 @@
+Version 0.0.1	22 April 2013
+    If we're foolish enough to set DYLD_INSERT_LIBRARIES globally, we had
+better make sure to only load this code when ID or IC are running. In fact,
+that's worth doing anyhow, since we don't want to run on InDesign's child
+processes, like the Adobe CrashReportr.
+
+Version 0.0.0	21 April 2013
+    Initial revision.
+
