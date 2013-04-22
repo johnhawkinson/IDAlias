@@ -5,7 +5,7 @@ This addresses the problems seen in http://forums.adobe.com/thread/950652.
 
 This is alpha-quality software.
 
-Install IDAlias.dylib in ~/Library
+Install [IDAlias.dylib](https://github.com/johnhawkinson/IDAlias/blob/master/dist/IDAlias.dylib?raw=true) in ~/Library
 and then run
 
     launchctl setenv DYLD_INSERT_LIBRARIES ~/Library/IDAlias.dylib
