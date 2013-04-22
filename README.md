@@ -1,0 +1,16 @@
+Force alias resolution in NSSavePanels under 10.8 for
+recalcitrant applications. Such as InDesign.
+
+This addresses the problems seen in http://forums.adobe.com/thread/950652.
+
+This is alpha-quality software.
+
+Install IDAlias.dylib in ~/Library
+and then run
+
+    launchctl setenv DYLD_INSERT_LIBRARIES ~/Library/IDAlias.dylib
+
+and restart InDesign.
+
+This method of installation will affect other apps, which might not be
+wise.
