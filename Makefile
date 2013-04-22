@@ -1,4 +1,4 @@
-all: IDAlias.dylib CalculatorOverrides.dylib # IDAlias64.dylib 
+all: IDAlias.dylib # CalculatorOverrides.dylib # IDAlias64.dylib 
 
 clean:
 	rm -f IDAlias.dylib IDAlias64.dylib CalculatorOverride.dylib
