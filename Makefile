@@ -1,10 +1,10 @@
-all: idalias.dylib idalias64.dylib CalculatorOverrides.dylib
+all: IDAlias.dylib IDAlias64.dylib CalculatorOverrides.dylib
 
-idalias.dylib: idalias.m
-	gcc -g -arch i386 -arch x86_64 -framework AppKit -framework Foundation -o idalias.dylib -lobjc -dynamiclib idalias.m
+IDAlias.dylib: IDAlias.m
+	gcc -g -arch i386 -arch x86_64 -framework AppKit -framework Foundation -o IDAlias.dylib -lobjc -dynamiclib IDAlias.m
 
-# idalias64.dylib: idalias.m
-# 	gcc -g -arch x86_64 -framework AppKit -framework Foundation -o idalias64.dylib -lobjc -dynamiclib idalias.m
+# IDAlias64.dylib: IDAlias.m
+# 	gcc -g -arch x86_64 -framework AppKit -framework Foundation -o IDAlias64.dylib -lobjc -dynamiclib IDAlias.m
 
 CalculatorOverrides.dylib: CalculatorOverrides.m
 	gcc -arch x86_64 -framework AppKit -framework Foundation -o $@ -lobjc -dynamiclib $<
