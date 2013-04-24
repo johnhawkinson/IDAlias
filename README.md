@@ -1,5 +1,6 @@
-Force alias resolution in NSSavePanels under 10.8 for
-recalcitrant applications. Such as InDesign.
+Force alias resolution in NSSavePanels under 10.7 for
+recalcitrant applications. Such as InDesign. And also
+10.8 (Mountain Lion)
 
 This addresses the problems seen in http://forums.adobe.com/thread/950652.
 
