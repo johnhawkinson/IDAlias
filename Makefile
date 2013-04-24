@@ -5,6 +5,7 @@ VERSION=0.0.1
 
 clean:
 	rm -f IDAlias.dylib IDAlias64.dylib CalculatorOverride.dylib
+	rm -rf IDAlias.dylib.dSYM
 
 IDAlias.dylib: IDAlias.m
 	gcc -g -Wall \
