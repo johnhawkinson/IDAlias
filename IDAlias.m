@@ -42,9 +42,23 @@ static IMP NSSavePanel_URLs = NULL;
      *
      * [[NSProcessInfo processInfo] processName]
      * returns <Adobe InDesign CS5>
+     * 
+     * (lldb) p (NSString*)[[NSProcessInfo processInfo] processName]
+     * (__NSCFString *) $2 = 0x0000608000245460 @"Adobe InDesign CC 2015"
+     *
+     *
      *
      * -[NSBundlebundlePath]
      * returns <Adobe InDesign CS5.app>
+     *
+     * (lldb) p (NSString*)[[NSBundle mainBundle] bundlePath]
+     * (__NSCFString *) $3 = 0x00006000024a04e0 @"/Applications/Adobe InDesign CC 2015/Adobe InDesign CC 2015.app"
+     * oops really:
+(lldb) po [[NSBundle mainBundle] bundlePath]
+/Applications/Adobe InDesign CC 2015/Adobe InDesign CC 2015.app
+
+(lldb) po [[NSProcessInfo processInfo] processName]
+Adobe InDesign CC 2015
      */
 
     NSString *procName = [[NSProcessInfo processInfo] processName];
@@ -84,14 +98,17 @@ static IMP NSSavePanel_URLs = NULL;
 {
   int count;
   NSError *error = nil;
-  NSMutableArray *urlArray;
+  NSMutableArray *urlArray0, *urlArray;
 
     // We first call the original method
-    urlArray = NSSavePanel_URLs(self, @selector(URLs), self);
+    urlArray0 = NSSavePanel_URLs(self, @selector(URLs), self);
      
     // Run our custom code
-    if ((count = [urlArray count])) {
+    if ((count = [urlArray0 count])) {
       int i;
+
+      urlArray = [NSMutableArray new];
+      [urlArray addObjectsFromArray:urlArray0];
 
       for (i=0; i<count; i++) {
 	NSURL *url = [urlArray objectAtIndex:i];
@@ -108,11 +125,9 @@ static IMP NSSavePanel_URLs = NULL;
 	}
 
 	BOOL isStale;
-	NSURL *realURL = [NSURL URLByResolvingBookmarkData:alias options:0
-					     relativeToURL:nil
-				       bookmarkDataIsStale:&isStale
+	NSURL *realURL = [NSURL URLByResolvingAliasFileAtURL:url options:0
 						     error:&error];
-	if (isStale || realURL == NULL) {
+	if (realURL == NULL) {
 	  NSLog(@"IDAlias failed alias resolution: %@", error);
 	}
 
@@ -122,6 +137,8 @@ static IMP NSSavePanel_URLs = NULL;
 #endif
       }
 
+    } else {
+      urlArray = urlArray0;
     }
     return urlArray;
 }
