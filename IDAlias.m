@@ -40,25 +40,11 @@ static IMP NSSavePanel_URLs = NULL;
      * only methods (3) and (5) return useful strings for InDesign at this
      * stage; the others return null:
      *
-     * [[NSProcessInfo processInfo] processName]
-     * returns <Adobe InDesign CS5>
-     * 
-     * (lldb) p (NSString*)[[NSProcessInfo processInfo] processName]
-     * (__NSCFString *) $2 = 0x0000608000245460 @"Adobe InDesign CC 2015"
+     * (lldb) po [[NSBundle mainBundle] bundlePath]
+     * /Applications/Adobe InDesign CC 2015/Adobe InDesign CC 2015.app
      *
-     *
-     *
-     * -[NSBundlebundlePath]
-     * returns <Adobe InDesign CS5.app>
-     *
-     * (lldb) p (NSString*)[[NSBundle mainBundle] bundlePath]
-     * (__NSCFString *) $3 = 0x00006000024a04e0 @"/Applications/Adobe InDesign CC 2015/Adobe InDesign CC 2015.app"
-     * oops really:
-(lldb) po [[NSBundle mainBundle] bundlePath]
-/Applications/Adobe InDesign CC 2015/Adobe InDesign CC 2015.app
-
-(lldb) po [[NSProcessInfo processInfo] processName]
-Adobe InDesign CC 2015
+     * (lldb) po [[NSProcessInfo processInfo] processName]
+     * Adobe InDesign CC 2015
      */
 
     NSString *procName = [[NSProcessInfo processInfo] processName];
