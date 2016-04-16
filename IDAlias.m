@@ -98,55 +98,57 @@ Adobe InDesign CC 2015
 {
   int count;
   NSError *error = nil;
-  NSMutableArray *urlArray0, *urlArray;
+  NSArray *originalURLArray;
 
     // We first call the original method
-    urlArray0 = NSSavePanel_URLs(self, @selector(URLs), self);
-     
+    originalURLArray = NSSavePanel_URLs(self, @selector(URLs), self);
+    count = [originalURLArray count];
+
+    if (!count) { // skip out early
+      return originalURLArray;	
+    }
+    
     // Run our custom code
-    if ((count = [urlArray0 count])) {
-      int i;
 
-      urlArray = [NSMutableArray new];
-      [urlArray addObjectsFromArray:urlArray0];
+    NSMutableArray *urlArray = [NSMutableArray new];
+    [urlArray addObjectsFromArray:originalURLArray];
 
-      for (i=0; i<count; i++) {
-	NSURL *url = [urlArray objectAtIndex:i];
+    int i;
+
+    for (i=0; i<count; i++) {
+      NSURL *url = [urlArray objectAtIndex:i];
 #ifdef DEBUG
-	fprintf(stderr, "URL:  %s\n",
-		[[url path] UTF8String]);
+      fprintf(stderr, "URL:  %s\n",
+	      [[url path] UTF8String]);
 #endif
 
 	
-	NSData *alias = [NSURL bookmarkDataWithContentsOfURL:url error:&error];
-	if (alias == NULL) {
-	  // Not an alias! A-OK!
-	  continue;
-	}
-
-	BOOL isStale;
-
-	// If we could depend on 10.10, we would use
-	// [NSURL URLByResolvingAliasFileAtURL] and skip the whole
-	// create bookmark/ resolve bookmark nonsense.
-	NSURL *realURL = [NSURL URLByResolvingBookmarkData:alias options:0
-					     relativeToURL:nil
-				       bookmarkDataIsStale:&isStale
-						     error:&error];
-       if (isStale || realURL == NULL) {
-	 //	if (realURL == NULL) {
-	  NSLog(@"IDAlias failed alias resolution: %@", error);
-	}
-
-	[urlArray replaceObjectAtIndex:i withObject:realURL];
-#ifdef DEBUG
-	  NSLog(@"IDAlias replaced path with realPath:%@", [realURL path]);
-#endif
+      NSData *alias = [NSURL bookmarkDataWithContentsOfURL:url error:&error];
+      if (alias == NULL) {
+	// Not an alias! A-OK!
+	continue;
       }
+      
+      BOOL isStale;
 
-    } else {
-      urlArray = urlArray0;
+      // If we could depend on 10.10, we would use
+      // [NSURL URLByResolvingAliasFileAtURL] and skip the whole
+      // create bookmark/ resolve bookmark nonsense.
+      NSURL *realURL = [NSURL URLByResolvingBookmarkData:alias options:0
+					   relativeToURL:nil
+				     bookmarkDataIsStale:&isStale
+						   error:&error];
+      if (isStale || realURL == NULL) {
+	//	if (realURL == NULL) {
+	NSLog(@"IDAlias failed alias resolution: %@", error);
+      }
+      
+      [urlArray replaceObjectAtIndex:i withObject:realURL];
+#ifdef DEBUG
+      NSLog(@"IDAlias replaced path with realPath:%@", [realURL path]);
+#endif
     }
+    
     return urlArray;
 }
  
