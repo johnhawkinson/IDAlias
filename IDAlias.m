@@ -125,9 +125,16 @@ Adobe InDesign CC 2015
 	}
 
 	BOOL isStale;
-	NSURL *realURL = [NSURL URLByResolvingAliasFileAtURL:url options:0
+
+	// If we could depend on 10.10, we would use
+	// [NSURL URLByResolvingAliasFileAtURL] and skip the whole
+	// create bookmark/ resolve bookmark nonsense.
+	NSURL *realURL = [NSURL URLByResolvingBookmarkData:alias options:0
+					     relativeToURL:nil
+				       bookmarkDataIsStale:&isStale
 						     error:&error];
-	if (realURL == NULL) {
+       if (isStale || realURL == NULL) {
+	 //	if (realURL == NULL) {
 	  NSLog(@"IDAlias failed alias resolution: %@", error);
 	}
 
