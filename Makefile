@@ -10,6 +10,7 @@ clean:
 
 IDAlias.dylib: IDAlias.m
 	gcc -g -Wall \
+	  $(CFLAGS) \
 	  -current_version ${VERSION} \
 	  -arch i386 -arch x86_64 \
 	  -framework AppKit -framework Foundation \
