@@ -1,5 +1,8 @@
 all: IDAlias.dylib # CalculatorOverrides.dylib # IDAlias64.dylib 
 
+debug:
+	make CFLAGS=-DDEBUG
+
 # VERSION=0.0.0		# hash: 01770378595d447b64764d88fb8add27483ca815
 # VERSION=0.0.1		# hash: 63112aaec9429d6785d071543e975223d4a43aca
 VERSION=0.0.2
