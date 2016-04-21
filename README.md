@@ -8,8 +8,8 @@ This is beta-quality[*] software.
 
 Install IDAlias.dylib in ~/Library
 Versions are OS-dependent  
-10.7	[IDAlias.dylib](https://github.com/johnhawkinson/IDAlias/blob/master/dist/10.7/IDAlias.dylib?raw=true)  
-10.8    [IDAlias.dylib](https://github.com/johnhawkinson/IDAlias/blob/master/dist/10.8/IDAlias.dylib?raw=true)  
+10.7	[IDAlias.dylib](https://github.com/johnhawkinson/IDAlias/blob/master/dist/0.0.1/IDAlias.dylib?raw=true)  
+10.8    [IDAlias.dylib](https://github.com/johnhawkinson/IDAlias/blob/master/dist/0.0.1/IDAlias.dylib?raw=true)  
 
 and then run
 
