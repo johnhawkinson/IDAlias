@@ -96,8 +96,7 @@ static IMP NSSavePanel_URLs = NULL;
     
     // Run our custom code
 
-    NSMutableArray *urlArray = [NSMutableArray new];
-    [urlArray addObjectsFromArray:originalURLArray];
+    NSMutableArray *urlArray = [originalURLArray mutableCopy];
 
     int i;
 
