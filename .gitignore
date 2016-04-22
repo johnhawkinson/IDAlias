@@ -1,5 +1,5 @@
 .DS_Store
-IDAlias.dylib
-IDAlias.dylib.dSYM
+./IDAlias.dylib
+./IDAlias.dylib.dSYM
 es.c~
 es.o
