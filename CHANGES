@@ -1,3 +1,7 @@
+Version 0.0.2	21 April 2016
+    Call [NSArray mutableCopy] since otherwise we fail on >= 10.9.
+I guess [NSSavePanel URLs] used to return a mutable array and stopped.
+
 Version 0.0.1	22 April 2013
     If we're foolish enough to set DYLD_INSERT_LIBRARIES globally, we had
 better make sure to only load this code when ID or IC are running. In fact,
