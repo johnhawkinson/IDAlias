@@ -3,7 +3,7 @@
 // recalcitrant applications. Such as InDesign. Only load
 // ourselves in apps on our list (InDesign and InCopy).
 // 
-// John Hawkinson <jhawk@mit.edu>
+// John Hawkinson <jhawk@alum.mit.edu>
 // 21 April 2013
 // 
 // Derived from an example by Alexandre Colucci (timac.org)
